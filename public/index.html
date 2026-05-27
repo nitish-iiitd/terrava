@@ -16,7 +16,13 @@
         <a class="navbar-brand fw-bold" href="#">
             <i class="bi bi-globe-asia-australia me-2"></i>Terrava
         </a>
-        <span class="badge rounded-pill text-bg-success">Ecosystem Data</span>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+            <span class="badge rounded-pill text-bg-success">Ecosystem Data</span>
+            <button class="btn btn-outline-success btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#howItWorksModal">
+                <i class="bi bi-info-circle me-1"></i>How it works
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -132,6 +138,227 @@
     <span>Loading ecosystem data…</span>
 </div>
 
+<!-- How it works modal -->
+<div class="modal fade" id="howItWorksModal" tabindex="-1" aria-labelledby="howItWorksModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="howItWorksModalLabel">
+                    <i class="bi bi-bar-chart-line text-success me-2"></i>Understanding the Numbers
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-3">
+
+                <!-- Biodiversity Index -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-success mb-2">
+                        <i class="bi bi-flower1 me-2"></i>What is the Biodiversity Index?
+                    </h6>
+                    <p class="text-muted small mb-3">
+                        The Biodiversity Index is a single number from <strong>1 to 99</strong> that summarises
+                        the overall ecological health of a state or district. Think of it as a report card for
+                        nature — the higher the number, the richer and better-protected the biodiversity of
+                        that region.
+                    </p>
+                    <div class="rounded-3 p-3 mb-3" style="background:#f0f7f1;border:1px solid #c5e8cb">
+                        <p class="fw-semibold small mb-2">The index combines three factors:</p>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <div class="bg-white rounded-3 p-3 text-center h-100">
+                                    <div class="fw-bold text-success fs-5 mb-1">40%</div>
+                                    <div class="fw-semibold small mb-1">Species Richness</div>
+                                    <div class="text-muted" style="font-size:0.78rem">
+                                        How many verified species sightings are recorded from this state
+                                        in the GBIF database
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-white rounded-3 p-3 text-center h-100">
+                                    <div class="fw-bold text-success fs-5 mb-1">30%</div>
+                                    <div class="fw-semibold small mb-1">Forest Cover</div>
+                                    <div class="text-muted" style="font-size:0.78rem">
+                                        What percentage of the state's total land area is forested,
+                                        per the FSI satellite survey
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-white rounded-3 p-3 text-center h-100">
+                                    <div class="fw-bold text-success fs-5 mb-1">30%</div>
+                                    <div class="fw-semibold small mb-1">Protected Area Density</div>
+                                    <div class="text-muted" style="font-size:0.78rem">
+                                        How many National Parks and Wildlife Sanctuaries exist
+                                        relative to the state's land area
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        Each factor is scored relative to <em>all other Indian states</em>, so the index
+                        reflects where a state stands within India — not on a global scale. A score
+                        of <strong>70+</strong> indicates a strong biodiversity profile.
+                        <strong>50–70</strong> is moderate. <strong>Below 50</strong> is relatively lower,
+                        which is typical for densely populated or arid states.
+                    </p>
+                    <p class="text-muted small mb-0">
+                        <i class="bi bi-lightbulb text-warning me-1"></i>
+                        <strong>Why log-scaling?</strong> Occurrence counts and protected area densities
+                        vary enormously — Maharashtra has 53 protected areas while Daman &amp; Diu has
+                        none, and Kerala's occurrence records dwarf those of remote territories. Using a
+                        logarithmic scale prevents one extreme outlier from making everyone else look the
+                        same, so the colour differences on the map are meaningful.
+                    </p>
+                </div>
+
+                <hr class="my-3" />
+
+                <!-- Individual metrics -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-success mb-3">
+                        <i class="bi bi-list-ul me-2"></i>What each number on a state card means
+                    </h6>
+
+                    <div class="mb-3">
+                        <p class="fw-semibold small mb-1">
+                            <i class="bi bi-binoculars text-success me-1"></i>Occurrences
+                        </p>
+                        <p class="text-muted small mb-0">
+                            The number of verified species observation records from that state in the
+                            <a href="https://www.gbif.org" target="_blank" rel="noopener">GBIF database</a>.
+                            One "occurrence" is one confirmed sighting of a species — a researcher logging
+                            a tiger, a birder recording a warbler, or a botanist photographing a plant.
+                            More records generally mean a richer and better-documented ecosystem.
+                            <br>
+                            <span class="fst-italic">Note: lower counts can also mean the region is
+                            under-surveyed, not necessarily that biodiversity is lower.</span>
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-semibold small mb-1">
+                            <i class="bi bi-tree text-success me-1"></i>Forest Cover (%)
+                        </p>
+                        <p class="text-muted small mb-0">
+                            The percentage of the state's total geographic area covered by forest,
+                            as measured by Forest Survey of India satellite imagery (2023 report).
+                            This includes dense forests, moderately dense forests, and open forests
+                            meeting a minimum canopy density threshold.
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-semibold small mb-1">
+                            <i class="bi bi-shield-check text-success me-1"></i>Protected Areas
+                        </p>
+                        <p class="text-muted small mb-0">
+                            The count of officially designated <strong>National Parks</strong> and
+                            <strong>Wildlife Sanctuaries</strong> in the state, as notified under the
+                            Wildlife Protection Act and reported in MoEF&CC Annual Report 2022–23.
+                            These are legally protected zones where wildlife and habitats are formally
+                            safeguarded by the Government of India.
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-semibold small mb-1">
+                            <i class="bi bi-exclamation-triangle text-warning me-1"></i>Threatened Species (est.)
+                        </p>
+                        <p class="text-muted small mb-0">
+                            An approximate count of species known to occur in the state that are
+                            classified as <strong>Vulnerable</strong>, <strong>Endangered</strong>,
+                            or <strong>Critically Endangered</strong> on the IUCN Red List.
+                            This is an indicative figure based on published distribution ranges —
+                            treat it as a rough signal, not a precise count.
+                        </p>
+                    </div>
+
+                    <div class="mb-0">
+                        <p class="fw-semibold small mb-1">
+                            <i class="bi bi-arrow-right-circle text-success me-1"></i>Trend
+                        </p>
+                        <p class="text-muted small mb-0">
+                            A qualitative indicator of the state's current ecological trajectory,
+                            based on known conservation patterns and published assessments:
+                        </p>
+                        <ul class="text-muted small mb-0 mt-1">
+                            <li><strong>Improving</strong> — conservation efforts, growing forest cover,
+                            or increasing species documentation suggest positive momentum
+                            (e.g., Karnataka, Uttarakhand).</li>
+                            <li><strong>Stable</strong> — no major change in either direction.</li>
+                            <li><strong>Sensitive</strong> — significant biodiversity under elevated
+                            pressure from habitat loss, human–wildlife conflict, or fragile ecosystems
+                            such as wetlands, hill forests, or floodplains (e.g., Assam, West Bengal).</li>
+                            <li><strong>Declining</strong> — indicators point to worsening conditions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="my-3" />
+
+                <!-- Data sources -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-success mb-3">
+                        <i class="bi bi-database me-2"></i>Where does the data come from?
+                    </h6>
+
+                    <div class="mb-3">
+                        <p class="fw-semibold small mb-1">GBIF — Global Biodiversity Information Facility</p>
+                        <p class="text-muted small mb-0">
+                            <a href="https://www.gbif.org" target="_blank" rel="noopener">gbif.org</a> is
+                            the world's largest open biodiversity database, with over 2 billion verified
+                            occurrence records contributed by researchers, museums, citizen scientists, and
+                            institutions globally. Terrava fetches India's state-level occurrence counts
+                            <strong>live from the GBIF API every time the page loads</strong>, so the
+                            numbers reflect the current state of the database.
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-semibold small mb-1">FSI — Forest Survey of India (State of Forest Report 2023)</p>
+                        <p class="text-muted small mb-0">
+                            India's official biennial forest assessment, produced by the Forest Survey
+                            of India using satellite imagery and ground surveys. Forest cover percentages
+                            on this site come from the 2023 edition.
+                        </p>
+                    </div>
+
+                    <div class="mb-0">
+                        <p class="fw-semibold small mb-1">MoEF&amp;CC — Ministry of Environment, Forest and Climate Change (Annual Report 2022–23)</p>
+                        <p class="text-muted small mb-0">
+                            India's official count of protected areas — National Parks and Wildlife
+                            Sanctuaries — per state, as reported in the 2022–23 Annual Report.
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="my-3" />
+
+                <!-- District data note -->
+                <div class="mb-2">
+                    <h6 class="fw-bold text-success mb-2">
+                        <i class="bi bi-map me-2"></i>A note on district-level data
+                    </h6>
+                    <p class="text-muted small mb-0">
+                        District-level scores are currently <strong>indicative estimates</strong> based on
+                        known ecological zones and published district-level studies. They are not derived
+                        from direct GBIF queries at district level and should not be used for official,
+                        policy, or research purposes. State-level data sourced from GBIF and FSI/MoEF
+                        is authoritative.
+                    </p>
+                </div>
+
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-success btn-sm" data-bs-dismiss="modal">Got it</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
 </body>

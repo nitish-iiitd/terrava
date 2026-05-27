@@ -277,9 +277,12 @@ function buildStateList() {
     return {
       name,
       ...meta,
-      occurrences: occ,
-      index:       Math.min(99, Math.max(1, Math.round(index))),
-      trend:       deriveTrend(name),
+      occurrences:    occ,
+      index:          Math.min(99, Math.max(1, Math.round(index))),
+      trend:          deriveTrend(name),
+      _occContrib:    hasGBIFData ? Math.round(0.40 * occScore) : null,
+      _forestContrib: Math.round(hasGBIFData ? 0.30 * fScore : 0.50 * fScore),
+      _paContrib:     Math.round(hasGBIFData ? 0.30 * paScore : 0.50 * paScore),
     };
   }).sort((a, b) => b.index - a.index);
 }
@@ -433,7 +436,9 @@ function renderStates(list = states) {
             <h4>${s.name}</h4>
             <p class="mb-0">${s.type === 'UT' ? 'Union Territory' : s.code} · ${s.trend}</p>
           </div>
-          <div class="index-badge" style="background:${getColor(s.index)}">${s.index}</div>
+          <div class="index-badge" style="background:${getColor(s.index)}"
+               data-state="${s.name.replace(/&/g,'&amp;').replace(/'/g,'&#39;')}"
+               tabindex="0">${s.index}</div>
         </div>
         <div class="meta-grid">
           <div class="meta-item">
@@ -458,6 +463,47 @@ function renderStates(list = states) {
         </div>
       </div>
     </div>`).join('');
+
+  initPopovers();
+}
+
+function buildIndexPopoverContent(s) {
+  const rows = s._occContrib !== null
+    ? [['Species richness','×40%',s._occContrib],['Forest cover','×30%',s._forestContrib],['Protected areas','×30%',s._paContrib]]
+    : [['Forest cover','×50%',s._forestContrib],['Protected areas','×50%',s._paContrib]];
+  const rowsHTML = rows.map(([label, weight, val]) => `
+    <tr>
+      <td style="font-size:12px;padding:3px 8px 3px 0;color:#6b7c72">${label}</td>
+      <td style="font-size:12px;padding:3px 8px;color:#6b7c72;text-align:center">${weight}</td>
+      <td style="font-size:12px;padding:3px 0;font-weight:700;text-align:right">${val}</td>
+    </tr>`).join('');
+  return `<table style="width:100%;border-collapse:collapse;min-width:190px">
+    <tbody>
+      ${rowsHTML}
+      <tr style="border-top:1px solid #dee2e6">
+        <td colspan="2" style="font-size:12px;padding:5px 8px 2px 0;font-weight:600">Index</td>
+        <td style="font-size:14px;padding:5px 0 2px;font-weight:800;text-align:right;color:#2f7d32">${s.index}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin:6px 0 0;font-size:11px;color:#6b7c72">Each factor is scored 0–100 relative to all states</p>`;
+}
+
+function initPopovers() {
+  document.querySelectorAll('.index-badge[data-state]').forEach(el => {
+    const existing = bootstrap.Popover.getInstance(el);
+    if (existing) existing.dispose();
+    const s = states.find(st => st.name === el.dataset.state);
+    if (!s) return;
+    new bootstrap.Popover(el, {
+      trigger:   'hover focus',
+      html:      true,
+      placement: 'left',
+      title:     'Index breakdown',
+      content:   buildIndexPopoverContent(s),
+      sanitize:  false,
+    });
+  });
 }
 
 // ── Districts ─────────────────────────────────────────────────────────────────

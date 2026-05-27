@@ -194,6 +194,10 @@ body {
     transition: background 0.3s;
 }
 
+.index-badge[data-state] {
+    cursor: help;
+}
+
 .meta-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
